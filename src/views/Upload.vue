@@ -31,6 +31,7 @@
   import ButtonUploader from "@/components/ButtonUploader";
   import { validationMixin } from 'vuelidate';
   import { required, maxLength } from 'vuelidate/lib/validators';
+  import api from '@/services/api';
 
   export default {
     name: 'Upload',
@@ -46,12 +47,13 @@
       name: '',
       videos: [],
       img: '',
+      uid: '',
     }),
     computed: {
       nameErrors () {
         const errors = [];
         if (!this.$v.name.$dirty) return errors;
-        !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long');
+        !this.$v.name.maxLength && errors.push('Name must be at most 25 characters long');
         !this.$v.name.required && errors.push('Name is required.');
         return errors
       },
@@ -59,7 +61,9 @@
     methods: {
       submit() {
         this.$v.$touch();
-        // call upload api
+        this.videos.forEach((file) => {
+          api.upload(file, this.img, this.name, this.uid);
+        });
       },
       clear() {
         this.$v.$reset();
