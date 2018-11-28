@@ -6,6 +6,10 @@
         <span class="font-weight-light">MATERIAL DESIGN</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
+      <v-btn>
+        <v-icon>cloud_upload</v-icon>
+      </v-btn>
+
     </v-toolbar>
 
     <v-content>
