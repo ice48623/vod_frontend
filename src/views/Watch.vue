@@ -3,7 +3,7 @@
     <h3>Vue Video.js Live Demo</h3>
     <!--<video-player class="vjs-sublime-skin" ref="videoPlayer" :options="playerOptions" @ready="onPlayerReadied" @timeupdate="onTimeupdate">-->
     <!--</video-player>-->
-    <video red="videoPlayer" class="video-js vjs-fluid" controls preload="auto" width="640" height="264" poster="https://peach.blender.org/wp-content/uploads/bbb-splash.png?3016dc" data-setup='{}'>
+    <video ref="videoPlayer" class="video-js vjs-fluid" controls preload="auto" width="640" height="264" poster="https://peach.blender.org/wp-content/uploads/bbb-splash.png?3016dc" data-setup='{}'>
       <source src="http://68.183.230.156:3030/hls/sample_1.mp4,.urlset/master.m3u8" type="application/x-mpegURL">
     </video>
   </v-container>
