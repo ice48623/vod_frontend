@@ -7,7 +7,9 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn>
-        <v-icon>cloud_upload</v-icon>
+        <v-icon
+          @click.native="go('/upload')"
+        >cloud_upload</v-icon>
       </v-btn>
 
     </v-toolbar>
@@ -26,6 +28,11 @@ export default {
     return {
       //
     }
-  }
+  },
+  methods: {
+    go(url) {
+      this.$router.push(url);
+    },
+  },
 }
 </script>
