@@ -73,7 +73,7 @@
         this.videos = videos;
       },
       onImgChange(img) {
-        tihs.img = img;
+        this.img = img;
       },
     }
   };
