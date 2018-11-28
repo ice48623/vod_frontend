@@ -1,39 +1,19 @@
 <template>
-  <v-container grid-list-md text-xs-center>
-    <v-layout row wrap>
-      <v-flex xs12 v-if="isFailed">
-        <!--FAILED-->
-        <h2>Uploaded failed.</h2>
-        <p>
-          <a href="javascript:void(0)" @click="reset()">Try again</a>
-        </p>
-        <pre>{{ uploadError }}</pre>
-      </v-flex>
-
-      <v-flex xs12>
-        <!--UPLOAD-->
-        <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
-          <div class="dropbox">
-            <input multiple
-                   type="file"
-                   :name="uploadFieldName"
-                   :disabled="isSaving"
-                   @change="onFileChanged"
-                   :accept="accept"
-                   class="input-file"
-            >
-            <p v-if="isInitial">
-              Drag your file(s) here to begin<br> or click to browse
-            </p>
-            <p v-if="isSaving">
-              Uploading files...
-            </p>
-          </div>
-        </form>
-      </v-flex>
-
-    </v-layout>
-  </v-container>
+  <div id="app">
+    <div class="container">
+      <!--UPLOAD-->
+      <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+        <h1>Upload images</h1>
+        <div class="dropbox">
+          <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="onFileChanged"
+                 :accept="accept" class="input-file">
+          <p v-if="isInitial">
+            Drag your file(s) here to begin<br> or click to browse
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -53,7 +33,7 @@
     },
     data() {
       return {
-        uploadError: null,
+        uploadError: '',
         currentStatus: STATUS_INITIAL,
         uploadFieldName: 'images'
       }
@@ -97,7 +77,7 @@
     background: lightcyan;
     color: dimgray;
     padding: 10px 10px;
-    min-height: 300px; /* minimum height */
+    min-height: 200px; /* minimum height */
     position: relative;
     cursor: pointer;
   }
@@ -108,6 +88,8 @@
     height: 200px;
     position: absolute;
     cursor: pointer;
+    left: -1px;
+    top: -1px;
   }
 
   .dropbox:hover {
