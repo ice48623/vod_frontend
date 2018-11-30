@@ -19,13 +19,13 @@
             {
               src: 'https://vjs.zencdn.net/v/oceans.mp4?SD',
               type: 'video/mp4',
-              label: 'SD',
+              label: '360',
               res: 360
             },
             {
               src: 'https://vjs.zencdn.net/v/oceans.mp4?HD',
               type: 'video/mp4',
-              label: 'HD',
+              label: '720',
               res: 720
             }
           ],
