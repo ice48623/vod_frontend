@@ -19,8 +19,8 @@
         :accept="'image/jpeg'"
       ></button-uploader>
       <v-layout row justify-center>
-        <v-btn @click="clear">clear</v-btn>
-        <v-btn @click="submit">upload</v-btn>
+        <v-btn @click.native="clear">clear</v-btn>
+        <v-btn @click.native="submit">upload</v-btn>
       </v-layout>
     </form>
   </v-container>
@@ -60,9 +60,16 @@
     },
     methods: {
       submit() {
+        console.log('submit');
         this.$v.$touch();
-        this.videos.forEach((file) => {
-          api.upload(file, this.img, this.name, this.uid);
+        Array.from(Array(this.videos.length).keys()).map( x => {
+          api.upload(this.videos[x], this.img, this.name, this.uid)
+            .then(res => {
+              console.log(res);
+            })
+            .catch(err => {
+              console.log(err);
+            })
         });
       },
       clear() {
@@ -73,7 +80,7 @@
         this.videos = videos;
       },
       onImgChange(img) {
-        this.img = img;
+        this.img = img[0];
       },
     }
   };

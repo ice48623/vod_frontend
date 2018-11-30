@@ -2,22 +2,27 @@
   <div id="app">
     <div class="container">
       <!--UPLOAD-->
-      <form enctype="multipart/form-data" novalidate v-if="isInitial || isSaving">
+      <form enctype="multipart/form-data" novalidate v-if="isInitial">
         <h1>Upload images</h1>
         <div class="dropbox">
-          <input type="file" multiple :name="uploadFieldName" :disabled="isSaving" @change="onFileChanged"
+          <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="onFileChanged"
                  :accept="accept" class="input-file">
           <p v-if="isInitial">
             Drag your file(s) here to begin<br> or click to browse
           </p>
         </div>
       </form>
+
+      <div class="dropbox" v-if="isSaving">
+        <p>{{ file }}</p>
+      </div>
+
     </div>
   </div>
 </template>
 
 <script>
-  const STATUS_INITIAL = 0, STATUS_SAVING = 1, STATUS_SUCCESS = 2, STATUS_FAILED = 3;
+  const STATUS_INITIAL = 0, STATUS_SAVING = 1;
 
   export default {
     name: 'Uploader',
@@ -35,7 +40,8 @@
       return {
         uploadError: '',
         currentStatus: STATUS_INITIAL,
-        uploadFieldName: 'images'
+        uploadFieldName: 'images',
+        file: '',
       }
     },
     computed: {
@@ -45,12 +51,6 @@
       isSaving() {
         return this.currentStatus === STATUS_SAVING;
       },
-      isSuccess() {
-        return this.currentStatus === STATUS_SUCCESS;
-      },
-      isFailed() {
-        return this.currentStatus === STATUS_FAILED;
-      }
     },
     methods: {
       reset() {
@@ -61,6 +61,9 @@
       onFileChanged() {
         const files = event.target.files;
         if (!files.length) return;
+        this.file = files[0].name;
+        // console.log(files[0].name);
+        this.currentStatus = STATUS_SAVING;
         this.callback(files);
       },
     },

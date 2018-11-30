@@ -1,9 +1,14 @@
 import Vue from 'vue'
 
 export default {
-  test() {
+  get() {
     const url = '/';
     return Vue.axios.get(url);
+  },
+
+  post() {
+    const url = '/';
+    return Vue.axios.post(url);
   },
 
   upload(file, img, name, uid) {
@@ -14,6 +19,6 @@ export default {
     formData.append('img', img);
     formData.append('name', name);
     formData.append('uid', uid);
-    return Vue.$axios.post(url, formData, config);
+    return Vue.axios.post(url, formData, config);
   },
 }
