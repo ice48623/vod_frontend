@@ -1,38 +1,62 @@
 <template>
   <v-container>
-    <h3>vue-video-player</h3>
+    <p class="headline font-weight-medium"> {{ name }} </p>
     <video-player :options="videoOptions" ref="videoPlayer"></video-player>
+
+    <div class="comment-section">
+      <p class="headline font-weight-medium">Comments</p>
+      <comment-card
+          v-for="c in comments"
+          :username="c.uid"
+          :comment="c.comment"
+      ></comment-card>
+    </div>
   </v-container>
 </template>
 
 <script>
+  import CommentCard from '@/components/CommentCard'
+
   export default {
     name: 'Watch',
     components: {
+      CommentCard,
     },
     data() {
       return {
-        initialized: false,
-        currentTech: 'Html5',
+        name: 'Demo Video',
         videoOptions: {
+          height: 640,
           source: [
             {
-              src: 'https://vjs.zencdn.net/v/oceans.mp4?SD',
-              type: 'video/mp4',
+              src: 'http://68.183.230.156:3030/hls/sample_1.mp4,.urlset/master.m3u8',
+              type: 'application/x-mpegURL',
               label: '360',
               res: 360
             },
-            {
-              src: 'https://vjs.zencdn.net/v/oceans.mp4?HD',
-              type: 'video/mp4',
-              label: '720',
-              res: 720
-            }
           ],
           playbackRates: [0.7, 1.0, 1.3, 1.5, 1.7],
           poster: 'http://cn.vuejs.org/images/logo.png',
           defaultSrcReId: 2
-        }
+        },
+        comments: [
+          {
+            uid: '23124324',
+            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
+          },
+          {
+            uid: '1234543',
+            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
+          },
+          {
+            uid: '867554',
+            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
+          },
+          {
+            uid: '2343254',
+            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
+          }
+        ],
       }
     },
     computed: {
@@ -42,3 +66,9 @@
     },
   }
 </script>
+
+<style>
+  .comment-section {
+    margin-top: 30px;
+  }
+</style>
