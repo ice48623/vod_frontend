@@ -5,8 +5,12 @@
       <form enctype="multipart/form-data" novalidate v-if="isInitial">
         <h1>Upload images</h1>
         <div class="dropbox">
-          <input type="file" :name="uploadFieldName" :disabled="isSaving" @change="onFileChanged"
-                 :accept="accept" class="input-file">
+          <input type="file"
+                 @change="onFileChanged"
+                 :accept="accept"
+                 class="input-file"
+                 ref="videoInput"
+          >
           <p v-if="isInitial">
             Drag your file(s) here to begin<br> or click to browse
           </p>
@@ -56,13 +60,14 @@
       reset() {
         // reset form to initial state
         this.currentStatus = STATUS_INITIAL;
-        this.uploadError = ''
+        this.uploadError = '';
+        this.file = '';
+        // this.$refs.videoInput.value = '';
       },
       onFileChanged() {
         const files = event.target.files;
         if (!files.length) return;
         this.file = files[0].name;
-        // console.log(files[0].name);
         this.currentStatus = STATUS_SAVING;
         this.callback(files);
       },

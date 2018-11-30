@@ -1,6 +1,7 @@
 <template>
   <v-container>
     <uploader
+      ref="videoUploader"
       :callback="onVideoChange"
       :accept="'video/*'"
     ></uploader>
@@ -15,6 +16,7 @@
           @blur="$v.name.$touch()"
       ></v-text-field>
       <button-uploader
+        ref="imgUploader"
         :callback="onImgChange"
         :accept="'image/jpeg'"
       ></button-uploader>
@@ -71,10 +73,13 @@
               console.log(err);
             })
         });
+        this.clear();
       },
       clear() {
         this.$v.$reset();
         this.name = '';
+        this.$refs.videoUploader.reset();
+        this.$refs.imgUploader.reset();
       },
       onVideoChange(videos) {
         this.videos = videos;

@@ -2,11 +2,13 @@
   <div>
     <h3>Thumbnail</h3>
     <v-layout row align-center>
-
-      <input type="file"
-             @change="handleFileChange"
-             :accept="accept"
-      >
+      <form enctype="multipart/form-data" novalidate>
+        <input type="file"
+               @change="handleFileChange"
+               :accept="accept"
+               ref="imgInput"
+        >
+      </form>
     </v-layout>
   </div>
 </template>
@@ -29,6 +31,9 @@
         const files = event.target.files;
         if (!files.length) return;
         this.callback(files);
+      },
+      reset() {
+        this.$refs.imgInput.value = '';
       },
     },
   };
