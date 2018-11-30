@@ -1,18 +1,11 @@
 <template>
   <v-container>
-    <h3>Vue Video.js Live Demo</h3>
-    <!--<video-player class="vjs-sublime-skin" ref="videoPlayer" :options="playerOptions" @ready="onPlayerReadied" @timeupdate="onTimeupdate">-->
-    <!--</video-player>-->
-    <video ref="videoPlayer" class="video-js vjs-fluid" controls preload="auto" width="640" height="264" poster="https://peach.blender.org/wp-content/uploads/bbb-splash.png?3016dc" data-setup='{}'>
-      <source src="http://68.183.230.156:3030/hls/sample_1.mp4,.urlset/master.m3u8" type="application/x-mpegURL">
-    </video>
+    <h3>vue-video-player</h3>
+    <video-player :options="videoOptions" ref="videoPlayer"></video-player>
   </v-container>
 </template>
 
 <script>
-  import 'video.js/dist/video-js.css'
-  import '../assets/styles/youtube.css'
-
   export default {
     name: 'Watch',
     components: {
@@ -21,23 +14,24 @@
       return {
         initialized: false,
         currentTech: 'Html5',
-        playerOptions: {
-          height: '360',
-          width: '640',
-          overNative: true,
-          autoplay: true,
-          controls: true,
-          techOrder: ['html5'],
-          sourceOrder: true,
-          html5: { hls: { withCredentials: false } },
-          sources: [
+        videoOptions: {
+          source: [
             {
-              withCredentials: false,
-              type: 'application/x-mpegURL',
-              src: 'http://68.183.230.156:3030/hls/sample_1.mp4,.urlset/master.m3u8'
+              src: 'https://vjs.zencdn.net/v/oceans.mp4?SD',
+              type: 'video/mp4',
+              label: 'SD',
+              res: 360
+            },
+            {
+              src: 'https://vjs.zencdn.net/v/oceans.mp4?HD',
+              type: 'video/mp4',
+              label: 'HD',
+              res: 720
             }
           ],
-          poster: 'src/assets/logo.png'
+          playbackRates: [0.7, 1.0, 1.3, 1.5, 1.7],
+          poster: 'http://cn.vuejs.org/images/logo.png',
+          defaultSrcReId: 2
         }
       }
     },
@@ -46,19 +40,5 @@
         return this.$refs.videoPlayer.player
       },
     },
-    methods: {
-      onPlayerReadied() {
-        if (!this.initialized) {
-          this.initialized = true;
-        }
-      },
-      // record current time
-      onTimeupdate(e) {
-        console.log('currentTime', e.cache_.currentTime)
-      },
-    }
   }
 </script>
-
-<style>
-</style>
