@@ -9,6 +9,7 @@
           v-for="c in comments"
           :username="c.uid"
           :comment="c.comment"
+          :key="c.uid"
       ></comment-card>
     </div>
   </v-container>
