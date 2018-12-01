@@ -6,12 +6,12 @@
           <v-flex xs12 text-xs-center>
             <p class="display-1">Register</p>
             <v-text-field
-                v-model="name"
-                :error-messages="nameErrors"
-                label="Name"
+                v-model="username"
+                :error-messages="usernameErrors"
+                label="Username"
                 required
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+                @input="$v.username.$touch()"
+                @blur="$v.username.$touch()"
             ></v-text-field>
             <v-text-field
                 v-model="password"
@@ -51,20 +51,20 @@
     mixins: [validationMixin],
     name: 'RegisterForm',
     validations: {
-      name: { required },
+      username: { required },
       password: { required, minLength: minLength(6) },
       confirmPassword: { required, sameAsPassword: sameAs('password') },
     },
     data: () => ({
-      name: '',
+      username: '',
       password: '',
       confirmPassword: '',
     }),
     computed: {
-      nameErrors () {
+      usernameErrors () {
         const errors = [];
-        if (!this.$v.name.$dirty) return errors;
-        !this.$v.name.required && errors.push('Name is required.');
+        if (!this.$v.username.$dirty) return errors;
+        !this.$v.username.required && errors.push('Username is required.');
         return errors;
       },
       passwordErrors () {
@@ -84,29 +84,17 @@
     },
     methods: {
       submit() {
-        this.$v.$touch()
+        this.$v.$touch();
+        this.register();
       },
       clear() {
         this.$v.$reset();
-        this.name = '';
+        this.username = '';
         this.password = '';
         this.confirmPassword = '';
       },
       register() {
-        api.register(this.username, this.password)
-          .then(res => {
-            const data = res.data;
-            if (!data.success) {
-              console.log(data.error);
-              return
-            }
-            // keep user in index here
-            this.$router.push('/home')
-          })
-          .catch(err => {
-            console.log(err);
-          });
-
+        this.$store.dispatch('register', {username: this.username, password: this.password})
       },
     }
   };
