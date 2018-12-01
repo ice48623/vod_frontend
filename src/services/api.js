@@ -21,4 +21,9 @@ export default {
     formData.append('uid', uid);
     return Vue.axios.post(url, formData, config);
   },
+
+  getAllVideo() {
+    const url = '/video';
+    return Vue.axios.get(url);
+  },
 }

@@ -17,6 +17,7 @@
 
 <script>
   import ThumbnailCard from '@/components/ThumbnailCard';
+  import api from '@/services/api';
 
   export default {
     name: 'Home',
@@ -25,56 +26,7 @@
     },
     data() {
       return {
-        videos: [
-          {
-            name: 'Demo Video',
-            video_id: 'asdfjklsadfj',
-            uid: 'ajslfkdj',
-            img: 'https://picsum.photos/500/300?image=1',
-            likes: 10,
-            comments: 15,
-          },
-          {
-            name: 'Demo Video',
-            video_id: 'asdfjklsadfj',
-            uid: 'ajslfkdj',
-            img: 'https://picsum.photos/500/300?image=2',
-            likes: 10,
-            comments: 15,
-          },
-          {
-            name: 'Demo Video',
-            video_id: 'asdfjklsadfj',
-            uid: 'ajslfkdj',
-            img: 'https://picsum.photos/500/300?image=3',
-            likes: 10,
-            comments: 15,
-          },
-          {
-            name: 'Demo Video',
-            video_id: 'asdfjklsadfj',
-            uid: 'ajslfkdj',
-            img: 'https://picsum.photos/500/300?image=4',
-            likes: 10,
-            comments: 15,
-          },
-          {
-            name: 'Demo Video',
-            video_id: 'asdfjklsadfj',
-            uid: 'ajslfkdj',
-            img: 'https://picsum.photos/500/300?image=5',
-            likes: 10,
-            comments: 15,
-          },
-          {
-            name: 'Demo Video',
-            video_id: 'asdfjklsadfj',
-            uid: 'ajslfkdj',
-            img: 'https://picsum.photos/500/300?image=6',
-            likes: 10,
-            comments: 15,
-          },
-        ]
+        videos: [],
       };
     },
     methods: {
@@ -82,6 +34,18 @@
         console.log(video_id);
         this.$router.push('/watch/' + video_id);
       },
+      getVideos() {
+        api.getAllVideo()
+          .then(res => {
+            this.videos = res.data.data;
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      },
+    },
+    mounted() {
+      this.getVideos();
     },
   }
 </script>

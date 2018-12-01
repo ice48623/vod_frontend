@@ -12,25 +12,19 @@
 
       <div class="icon">
         <v-badge
-            overlap
             color="orange"
         >
-          <span slot="badge">6</span>
-          <v-btn icon>
-            <v-icon>favorite</v-icon>
-          </v-btn>
+          <span slot="badge">{{ likes }}</span>
+          <v-icon>favorite</v-icon>
         </v-badge>
       </div>
 
       <div class="icon">
         <v-badge
-            overlap
             color="orange"
         >
-          <span slot="badge">6</span>
-          <v-btn icon>
-            <v-icon>comment</v-icon>
-          </v-btn>
+          <span slot="badge">{{ comments }}</span>
+          <v-icon>comment</v-icon>
         </v-badge>
       </div>
     </v-card-actions>
@@ -80,6 +74,6 @@
     padding: 10px 20px 10px 20px;
   }
   .icon {
-    margin: 0 2px;
+    margin: 10px 10px 0 10px;
   }
 </style>

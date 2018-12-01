@@ -15,6 +15,7 @@ let config = {
     Accept: 'application/json',
     'Content-Type': 'application/json',
   },
+
   // baseURL: process.env.baseURL || process.env.apiUrl || ""
   // timeout: 60 * 1000, // Timeout
   // withCredentials: true, // Check cross-site Access-Control
