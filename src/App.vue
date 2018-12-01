@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-toolbar app>
+    <v-toolbar app v-if="is_logged_in">
       <v-toolbar-title class="headline text-uppercase">
         <span>Vuetify</span>
         <span class="font-weight-light">MATERIAL DESIGN</span>
@@ -11,9 +11,7 @@
           @click.native="go('/upload')"
         >cloud_upload</v-icon>
       </v-btn>
-
     </v-toolbar>
-
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -21,18 +19,19 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex';
 
-export default {
-  name: 'App',
-  data() {
-    return {
-      //
-    }
-  },
-  methods: {
-    go(url) {
-      this.$router.push(url);
+  export default {
+    name: 'App',
+    methods: {
+      go(url) {
+        this.$router.push(url);
+      },
     },
-  },
-}
+    computed: {
+      ...mapGetters([
+        'is_logged_in',
+      ])
+    }
+  }
 </script>
