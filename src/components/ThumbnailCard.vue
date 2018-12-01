@@ -6,14 +6,35 @@
         :src="src"
         aspect-ratio="1.7778"
     ></v-img>
-    <v-card-text>
-      <p>{{ title }}</p>
-    </v-card-text>
+    <v-card-actions class="actions">
+      {{ title }}
+      <v-spacer></v-spacer>
 
-    <v-card-actions>
-      <v-btn flat color="orange">Share</v-btn>
-      <v-btn flat color="orange">Explore</v-btn>
+      <div class="icon">
+        <v-badge
+            overlap
+            color="orange"
+        >
+          <span slot="badge">6</span>
+          <v-btn icon>
+            <v-icon>favorite</v-icon>
+          </v-btn>
+        </v-badge>
+      </div>
+
+      <div class="icon">
+        <v-badge
+            overlap
+            color="orange"
+        >
+          <span slot="badge">6</span>
+          <v-btn icon>
+            <v-icon>comment</v-icon>
+          </v-btn>
+        </v-badge>
+      </div>
     </v-card-actions>
+
   </v-card>
 </template>
 
@@ -55,5 +76,10 @@
 </script>
 
 <style>
-
+  .actions {
+    padding: 10px 20px 10px 20px;
+  }
+  .icon {
+    margin: 0 2px;
+  }
 </style>
