@@ -26,4 +26,9 @@ export default {
     const url = '/video';
     return Vue.axios.get(url);
   },
+
+  getVideoDetail(video_id) {
+    const url = '/video/' + video_id;
+    return Vue.axios.get(url);
+  },
 }

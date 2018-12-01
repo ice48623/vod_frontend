@@ -31,7 +31,6 @@
     },
     methods: {
       go(video_id) {
-        console.log(video_id);
         this.$router.push('/watch/' + video_id);
       },
       getVideos() {

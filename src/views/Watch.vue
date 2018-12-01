@@ -16,7 +16,8 @@
 </template>
 
 <script>
-  import CommentCard from '@/components/CommentCard'
+  import CommentCard from '@/components/CommentCard';
+  import api from '@/services/api';
 
   export default {
     name: 'Watch',
@@ -26,6 +27,9 @@
     data() {
       return {
         name: 'Demo Video',
+        video_id: '',
+        filename: '',
+        likes: 0,
         videoOptions: {
           height: 640,
           source: [
@@ -60,10 +64,38 @@
         ],
       }
     },
+    methods: {
+      initialize() {
+        this.video_id = this.$route.params.video_id;
+        this.getVideoDetail(this.video_id);
+      },
+      getVideoDetail(video_id) {
+        api.getVideoDetail(video_id)
+          .then(res => {
+            const data = res.data;
+            if (!data.success) {
+              console.log(data.error);
+              return
+            }
+            const resData = data.data;
+            this.comments = resData.comments;
+            this.filename = resData.filename;
+            this.videoOptions.poster = resData.img;
+            this.likes = resData.likes;
+            this.videoOptions.source = resData.resolutions;
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      },
+    },
     computed: {
       player() {
         return this.$refs.videoPlayer.player
       },
+    },
+    mounted() {
+      // this.initialize();
     },
   }
 </script>
