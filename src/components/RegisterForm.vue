@@ -100,7 +100,7 @@
               console.log(data.error);
               return
             }
-            // keep user in store here
+            // keep user in index here
             this.$router.push('/home')
           })
           .catch(err => {

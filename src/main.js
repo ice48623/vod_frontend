@@ -5,8 +5,8 @@ import App from './App.vue'
 import router from './router.js'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
-import Vuex from 'vuex'
 import videoPlayer from 'vue-video-player'
+import { store } from './store'
 
 videoPlayer.config({
   youtube: true,
@@ -16,8 +16,6 @@ videoPlayer.config({
 // use
 Vue.use(videoPlayer);
 
-Vue.use(Vuex);
-
 Vue.use(Vuetify, {
     iconfont: 'md',
 });
@@ -25,5 +23,6 @@ Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app');

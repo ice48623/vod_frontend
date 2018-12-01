@@ -6,12 +6,12 @@
           <v-flex xs12 text-xs-center>
             <p class="display-1">Login</p>
             <v-text-field
-                v-model="name"
-                :error-messages="nameErrors"
+                v-model="username"
+                :error-messages="usernameErrors"
                 label="Name"
                 required
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+                @input="$v.username.$touch()"
+                @blur="$v.username.$touch()"
             ></v-text-field>
             <v-text-field
                 v-model="password"
@@ -43,18 +43,18 @@
     mixins: [validationMixin],
     name: 'LoginForm',
     validations: {
-      name: { required },
+      username: { required },
       password: { required, minLength: minLength(6) },
     },
     data: () => ({
-      name: '',
+      username: '',
       password: '',
     }),
     computed: {
-      nameErrors () {
+      usernameErrors () {
         const errors = [];
-        if (!this.$v.name.$dirty) return errors;
-        !this.$v.name.required && errors.push('Name is required.');
+        if (!this.$v.username.$dirty) return errors;
+        !this.$v.username.required && errors.push('Username is required.');
         return errors;
       },
       passwordErrors () {
@@ -67,27 +67,29 @@
     },
     methods: {
       submit () {
-        this.$v.$touch()
+        this.$v.$touch();
+        this.login();
       },
       clear () {
         this.$v.$reset();
-        this.name = '';
+        this.username = '';
         this.password = '';
       },
       login() {
-        api.login(this.username, this.password)
-          .then(res => {
-            const data = res.data;
-            if (!data.success) {
-              console.log(data.error);
-              return
-            }
-            // keep user in store here
-            this.$router.push('/home')
-          })
-          .catch(err => {
-            console.log(err);
-          })
+        // api.login(this.username, this.password)
+        //   .then(res => {
+        //     const data = res.data;
+        //     if (!data.success) {
+        //       console.log(data.error);
+        //       return
+        //     }
+        //     // keep user in index here
+        //     this.$router.push('/home')
+        //   })
+        //   .catch(err => {
+        //     console.log(err);
+        //   })
+        this.$store.dispatch('login', {username: this.username, password: this.password})
       },
     }
   };
