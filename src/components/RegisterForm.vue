@@ -45,7 +45,6 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength, sameAs } from 'vuelidate/lib/validators'
-  import api from '@/services/api';
 
   export default {
     mixins: [validationMixin],
@@ -86,6 +85,7 @@
       submit() {
         this.$v.$touch();
         this.register();
+        this.clear();
       },
       clear() {
         this.$v.$reset();

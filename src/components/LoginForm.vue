@@ -37,7 +37,6 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
-  import api from '@/services/api';
 
   export default {
     mixins: [validationMixin],
@@ -46,18 +45,18 @@
       username: { required },
       password: { required, minLength: minLength(6) },
     },
-    data: () => ({
+    data:() => ({
       username: '',
       password: '',
     }),
     computed: {
-      usernameErrors () {
+      usernameErrors() {
         const errors = [];
         if (!this.$v.username.$dirty) return errors;
         !this.$v.username.required && errors.push('Username is required.');
         return errors;
       },
-      passwordErrors () {
+      passwordErrors() {
         const errors = [];
         if (!this.$v.password.$dirty) return errors;
         !this.$v.password.minLength && errors.push('Password must be at least 6 characters long');
@@ -66,29 +65,17 @@
       }
     },
     methods: {
-      submit () {
+      submit() {
         this.$v.$touch();
         this.login();
+        this.clear();
       },
-      clear () {
+      clear() {
         this.$v.$reset();
         this.username = '';
         this.password = '';
       },
       login() {
-        // api.login(this.username, this.password)
-        //   .then(res => {
-        //     const data = res.data;
-        //     if (!data.success) {
-        //       console.log(data.error);
-        //       return
-        //     }
-        //     // keep user in index here
-        //     this.$router.push('/home')
-        //   })
-        //   .catch(err => {
-        //     console.log(err);
-        //   })
         this.$store.dispatch('login', {username: this.username, password: this.password})
       },
     }
