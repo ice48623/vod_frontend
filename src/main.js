@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router.js'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
+import Vuex from 'vuex'
 import videoPlayer from 'vue-video-player'
 
 videoPlayer.config({
@@ -14,6 +15,8 @@ videoPlayer.config({
 });
 // use
 Vue.use(videoPlayer);
+
+Vue.use(Vuex);
 
 Vue.use(Vuetify, {
     iconfont: 'md',

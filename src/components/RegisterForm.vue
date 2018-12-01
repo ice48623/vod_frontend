@@ -45,6 +45,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength, sameAs } from 'vuelidate/lib/validators'
+  import api from '@/services/api';
 
   export default {
     mixins: [validationMixin],
@@ -92,7 +93,20 @@
         this.confirmPassword = '';
       },
       register() {
-        this.$router.push('/home')
+        api.register(this.username, this.password)
+          .then(res => {
+            const data = res.data;
+            if (!data.success) {
+              console.log(data.error);
+              return
+            }
+            // keep user in store here
+            this.$router.push('/home')
+          })
+          .catch(err => {
+            console.log(err);
+          });
+
       },
     }
   };

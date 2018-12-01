@@ -21,4 +21,27 @@ export default {
     formData.append('uid', uid);
     return Vue.axios.post(url, formData, config);
   },
+
+  login(username, password) {
+    const url = '/login';
+    const body = {
+      username: username,
+      password: password,
+    };
+    return Vue.axios.post(url, body);
+  },
+
+  logout() {
+    const url = '/logout';
+    return Vue.post(url);
+  },
+
+  register(username, password) {
+    const url = '/register';
+    const body = {
+      username: username,
+      password: password,
+    };
+    return Vue.axios.post(url, body);
+  },
 }
