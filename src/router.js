@@ -1,17 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/views/Home.vue'
-import About from '@/views/About.vue'
 import Live from '@/views/live.vue'
 import Watch from '@/views/Watch.vue';
 import Upload from '@/views/Upload.vue';
+import Login from '@/views/Login.vue';
 
 Vue.use(Router);
 
 const router = new Router({
   routes: [
     {
-      path: '/',
+      path: '/home',
       name: 'home',
       component: Home
     },
@@ -21,9 +21,9 @@ const router = new Router({
       component: Live
     },
     {
-      path: '/about',
-      name: 'about',
-      component: About
+      path: '/',
+      name: 'login',
+      component: Login
     },
     {
       path: '/watch/:video_id',
