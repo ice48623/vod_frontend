@@ -4,7 +4,26 @@
     <video-player :options="videoOptions" ref="videoPlayer"></video-player>
 
     <div class="comment-section">
-      <p class="headline font-weight-medium">Comments</p>
+      <div class="comment-header">
+        <span class="headline font-weight-medium">Comments</span>
+        <span class="like-section">
+          <v-btn
+              icon
+              v-if="!liked"
+              @click.native="handleLike"
+          >
+            <v-icon>favorite_border</v-icon>
+          </v-btn>
+          <v-btn
+              icon
+              v-if="liked"
+              @click.native="handleLike"
+          >
+            <v-icon color="red">favorite</v-icon>
+          </v-btn>
+          {{ likes }}
+        </span>
+      </div>
       <comment-card
           v-for="c in comments"
           :username="c.uid"
@@ -18,6 +37,7 @@
 <script>
   import CommentCard from '@/components/CommentCard';
   import api from '@/services/api';
+  import { mapGetters } from 'vuex';
 
   export default {
     name: 'Watch',
@@ -27,6 +47,7 @@
     data() {
       return {
         name: 'Demo Video',
+        liked: false,
         video_id: '',
         filename: '',
         likes: 0,
@@ -88,11 +109,25 @@
             console.log(err);
           });
       },
+      handleLike() {
+        if (!this.liked) {
+          // api.like(this.video_id, uid);
+          this.likes = this.likes + 1;
+          this.liked = true;
+        } else {
+          // api.unlike(this.video_id, uid);
+          this.likes = this.likes - 1;
+          this.liked = false;
+        }
+      },
     },
     computed: {
       player() {
         return this.$refs.videoPlayer.player
       },
+      ...mapGetters([
+        'uid',
+      ])
     },
     mounted() {
       // this.initialize();
@@ -103,5 +138,13 @@
 <style>
   .comment-section {
     margin-top: 30px;
+  }
+
+  .like-section {
+    margin-left: 10px;
+  }
+
+  .comment-header {
+    margin-bottom: 20px;
   }
 </style>
