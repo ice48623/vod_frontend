@@ -1,7 +1,12 @@
 <template>
   <v-container fluid grid-list-lg justify-center>
     <v-layout row wrap>
-      <v-flex v-for="v in videos" :key="v.video_id" xs3>
+      <v-flex
+          v-for="v in videos"
+          :key="v.video_id"
+          v-if="!isVideoEmpty"
+          xs3
+      >
         <thumbnail-card
           :id="v.video_id"
           :title="v.name"
@@ -10,6 +15,11 @@
           :comments="v.comments"
           :callback="go"
         ></thumbnail-card>
+      </v-flex>
+      <v-flex
+          v-if="isVideoEmpty"
+      >
+        <p>No available video, please upload</p>
       </v-flex>
     </v-layout>
   </v-container>
@@ -41,6 +51,11 @@
           .catch(err => {
             console.log(err);
           })
+      },
+    },
+    computed: {
+      isVideoEmpty() {
+        return this.videos.length === 0;
       },
     },
     mounted() {

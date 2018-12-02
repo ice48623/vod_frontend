@@ -62,27 +62,10 @@
             },
           ],
           playbackRates: [0.7, 1.0, 1.3, 1.5, 1.7],
-          poster: 'http://cn.vuejs.org/images/logo.png',
+          poster: '',
           defaultSrcReId: 2
         },
-        comments: [
-          {
-            uid: '23124324',
-            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
-          },
-          {
-            uid: '1234543',
-            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
-          },
-          {
-            uid: '867554',
-            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
-          },
-          {
-            uid: '2343254',
-            comment: 'Located two hours south of Sydney in the Southern Highlands of New South Wales, ...'
-          }
-        ],
+        comments: [],
       }
     },
     methods: {
@@ -93,6 +76,7 @@
       getVideoDetail(video_id) {
         api.getVideoDetail(video_id)
           .then(res => {
+            console.log(res);
             const data = res.data;
             if (!data.success) {
               console.log(data.error);
@@ -103,7 +87,7 @@
             this.filename = resData.filename;
             this.videoOptions.poster = resData.img;
             this.likes = resData.likes;
-            this.videoOptions.source = resData.resolutions;
+            // this.videoOptions.source = resData.source;
           })
           .catch(err => {
             console.log(err);
@@ -111,11 +95,11 @@
       },
       handleLike() {
         if (!this.liked) {
-          // api.like(this.video_id, uid);
+          api.like(this.video_id, this.uid);
           this.likes = this.likes + 1;
           this.liked = true;
         } else {
-          // api.unlike(this.video_id, uid);
+          api.unlike(this.video_id, this.uid);
           this.likes = this.likes - 1;
           this.liked = false;
         }
@@ -130,7 +114,7 @@
       ])
     },
     mounted() {
-      // this.initialize();
+      this.initialize();
     },
   }
 </script>

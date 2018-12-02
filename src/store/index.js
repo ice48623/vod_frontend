@@ -7,7 +7,7 @@ export const store = new Vuex.Store({
   state: {
     username: 'username',
     uid: '123546',
-    is_logged_in: false,
+    is_logged_in: true,
   },
   getters : {
     username : state => {
