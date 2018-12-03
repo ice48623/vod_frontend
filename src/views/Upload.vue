@@ -67,13 +67,14 @@
         Array.from(Array(this.videos.length).keys()).map( x => {
           api.upload(this.videos[x], this.img, this.name, this.uid)
             .then(res => {
-              console.log(res);
+              this.clear();
+              this.$router.push('/home')
             })
             .catch(err => {
-              console.log(err);
+              this.clear();
+              this.$router.push('/home')
             })
         });
-        this.clear();
       },
       clear() {
         this.$v.$reset();

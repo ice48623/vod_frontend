@@ -87,7 +87,7 @@
             this.filename = resData.filename;
             this.videoOptions.poster = resData.img;
             this.likes = resData.likes;
-            // this.videoOptions.source = resData.source;
+            this.videoOptions.source = resData.source;
           })
           .catch(err => {
             console.log(err);
