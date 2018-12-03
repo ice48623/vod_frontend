@@ -9,19 +9,19 @@
         <span class="like-section">
           <v-btn
               icon
-              v-if="!liked"
+              v-if="!likes.is_like"
               @click.native="handleLike"
           >
             <v-icon>favorite_border</v-icon>
           </v-btn>
           <v-btn
               icon
-              v-if="liked"
+              v-if="likes.is_like"
               @click.native="handleLike"
           >
             <v-icon color="red">favorite</v-icon>
           </v-btn>
-          {{ likes }}
+          {{ likes.amount }}
         </span>
       </div>
       <comment-card
@@ -50,17 +50,10 @@
         liked: false,
         video_id: '',
         filename: '',
-        likes: 0,
+        likes: {},
         videoOptions: {
           height: 640,
-          source: [
-            {
-              src: 'http://68.183.230.156:3030/hls/sample_1.mp4,.urlset/master.m3u8',
-              type: 'application/x-mpegURL',
-              label: '360',
-              res: 360
-            },
-          ],
+          source: [],
           playbackRates: [0.7, 1.0, 1.3, 1.5, 1.7],
           poster: '',
           defaultSrcReId: 2
@@ -74,7 +67,7 @@
         this.getVideoDetail(this.video_id);
       },
       getVideoDetail(video_id) {
-        api.getVideoDetail(video_id)
+        api.getVideoDetail(video_id, this.uid)
           .then(res => {
             console.log(res);
             const data = res.data;
@@ -88,20 +81,22 @@
             this.videoOptions.poster = resData.img;
             this.likes = resData.likes;
             this.videoOptions.source = resData.source;
+            console.log(this.videoOptions.source);
+            this.player.updateSrc(resData.source);
           })
           .catch(err => {
             console.log(err);
           });
       },
       handleLike() {
-        if (!this.liked) {
+        if (!this.likes.is_like) {
           api.like(this.video_id, this.uid);
-          this.likes = this.likes + 1;
-          this.liked = true;
+          this.likes.amount = this.likes.amount + 1;
+          this.likes.is_like = true;
         } else {
           api.unlike(this.video_id, this.uid);
-          this.likes = this.likes - 1;
-          this.liked = false;
+          this.likes.amount = this.likes.amount - 1;
+          this.likes.is_like = false;
         }
       },
     },

@@ -15,11 +15,6 @@
           @input="$v.name.$touch()"
           @blur="$v.name.$touch()"
       ></v-text-field>
-      <button-uploader
-        ref="imgUploader"
-        :callback="onImgChange"
-        :accept="'image/jpeg'"
-      ></button-uploader>
       <v-layout row justify-center>
         <v-btn @click.native="clear">clear</v-btn>
         <v-btn @click.native="submit">upload</v-btn>
@@ -30,7 +25,6 @@
 
 <script>
   import Uploader from '@/components/Uploader';
-  import ButtonUploader from "@/components/ButtonUploader";
   import { validationMixin } from 'vuelidate';
   import { required, maxLength } from 'vuelidate/lib/validators';
   import api from '@/services/api';
@@ -39,7 +33,6 @@
     name: 'Upload',
     components: {
       Uploader,
-      ButtonUploader,
     },
     mixins: [validationMixin],
     validations: {
@@ -48,7 +41,6 @@
     data: () => ({
       name: '',
       videos: [],
-      img: '',
       uid: '',
     }),
     computed: {
@@ -62,10 +54,9 @@
     },
     methods: {
       submit() {
-        console.log('submit');
         this.$v.$touch();
         Array.from(Array(this.videos.length).keys()).map( x => {
-          api.upload(this.videos[x], this.img, this.name, this.uid)
+          api.upload(this.videos[x], this.name, this.uid)
             .then(res => {
               this.clear();
               this.$router.push('/home')
@@ -80,13 +71,9 @@
         this.$v.$reset();
         this.name = '';
         this.$refs.videoUploader.reset();
-        this.$refs.imgUploader.reset();
       },
       onVideoChange(videos) {
         this.videos = videos;
-      },
-      onImgChange(img) {
-        this.img = img[0];
       },
     }
   };

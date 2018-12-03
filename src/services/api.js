@@ -11,12 +11,11 @@ export default {
     return Vue.axios.post(url);
   },
 
-  upload(file, img, name, uid) {
+  upload(file, name, uid) {
     const url = '/upload';
     const config = { headers: { 'Content-Type': 'multipart/form-data' } };
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('img', img);
     formData.append('name', name);
     formData.append('uid', uid);
     return Vue.axios.post(url, formData, config);
@@ -27,9 +26,12 @@ export default {
     return Vue.axios.get(url);
   },
 
-  getVideoDetail(video_id) {
+  getVideoDetail(video_id, uid) {
     const url = '/video/' + video_id;
-    return Vue.axios.get(url);
+    const body = {
+      uid: uid,
+    };
+    return Vue.axios.post(url, body);
   },
 
   like(video_id, uid) {
