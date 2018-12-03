@@ -5,7 +5,7 @@ import App from './App.vue'
 import router from './router.js'
 import Vuetify from 'vuetify/lib'
 import 'vuetify/src/stylus/app.styl'
-import videoPlayer from 'vue-video-player'
+import videoPlayer from 'vue-vjs-hls'
 import { store } from './store'
 
 videoPlayer.config({
