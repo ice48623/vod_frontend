@@ -48,8 +48,8 @@
           .then(res => {
             this.videos = res.data.data;
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
+            this.$store.dispatch('openPopup', {title: 'Unable to fetch video', message: 'Please try again'})
           })
       },
     },

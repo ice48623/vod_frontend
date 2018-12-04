@@ -75,10 +75,9 @@
       getVideoDetail(video_id) {
         api.getVideoDetail(video_id, this.uid)
           .then(res => {
-            console.log(res);
             const data = res.data;
             if (!data.success) {
-              console.log(data.error);
+              this.$store.dispatch('openPopup', {title: 'Unable to fetch video', message: data.error});
               return
             }
             const resData = data.data;
@@ -142,7 +141,6 @@
     },
     mounted() {
       this.initialize();
-      console.log(this.uid)
     },
   }
 </script>

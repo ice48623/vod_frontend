@@ -56,12 +56,9 @@ export const store = new Vuex.Store({
   },
   actions : {
     login : async (context, payload) => {
-      console.log('login');
-      console.log(payload);
       context.commit('login', payload);
     },
     logout : async (context) => {
-      console.log('logout');
       context.commit('logout');
     },
     register : async (context, payload) => {
