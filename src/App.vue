@@ -1,9 +1,10 @@
 <template>
   <v-app dark>
-    <v-toolbar app v-if="is_logged_in">
+    <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
         <span>Hello : </span>
-        <span>{{ username }}</span>
+        <span v-if="is_logged_in">{{ username }}</span>
+        <span v-if="!is_logged_in">guess</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn>
@@ -13,6 +14,7 @@
       </v-btn>
       <v-btn
         @click.native="logout"
+        v-if="is_logged_in"
       >
         Logout
       </v-btn>
