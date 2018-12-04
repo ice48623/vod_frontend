@@ -7,7 +7,12 @@ export const store = new Vuex.Store({
   state: {
     username: '',
     uid: '',
-    is_logged_in: true,
+    is_logged_in: false,
+    popup: {
+      title: '',
+      message: '',
+      dialog: '',
+    },
   },
   getters : {
     username : state => {
@@ -18,7 +23,10 @@ export const store = new Vuex.Store({
     },
     is_logged_in : state => {
       return state.is_logged_in;
-    }
+    },
+    popup : state => {
+      return state.popup;
+    },
   },
   mutations: {
     set_username : (state, payload) => {
@@ -29,7 +37,17 @@ export const store = new Vuex.Store({
     },
     set_is_logged_in : (state, payload) => {
       state.is_logged_in = payload;
-    }
+    },
+    open_popup : (state, payload) => {
+      state.popup.title = payload.title;
+      state.popup.message = payload.message;
+      state.popup.dialog = true;
+    },
+    close_popup : (state) => {
+      state.popup.title = '';
+      state.popup.message = '';
+      state.popup.dialog = false;
+    },
   },
   actions : {
     login : async (context, payload) => {
@@ -63,6 +81,12 @@ export const store = new Vuex.Store({
       context.commit('set_uid', data.uid);
       context.commit('set_is_logged_in', true);
       return data;
+    },
+    openPopup : (context, payload) => {
+      context.commit('open_popup', payload);
+    },
+    closePopup : (context) => {
+      context.commit('close_popup');
     },
   }
 });

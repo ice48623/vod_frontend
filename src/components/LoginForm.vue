@@ -71,6 +71,7 @@
           .then(res => {
             if (!res.success) {
               console.log(res.error);
+              this.$store.dispatch('openPopup', {title: 'Login Failed', message: res.error});
               return
             }
             this.$router.push('/home')
