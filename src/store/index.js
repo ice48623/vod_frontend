@@ -5,8 +5,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    username: 'username',
-    uid: '123546',
+    username: '',
+    uid: '',
     is_logged_in: true,
   },
   getters : {
@@ -33,6 +33,7 @@ export const store = new Vuex.Store({
   },
   actions : {
     login : async (context, payload) => {
+      console.log('login');
       const body = {
         username: payload.username,
         password: payload.password,
@@ -40,9 +41,16 @@ export const store = new Vuex.Store({
       let { data } = await Vue.axios.post('/login', body);
       context.commit('set_username', data.username);
       context.commit('set_uid', data.uid);
+      context.commit('set_is_logged_in', true);
+      return data;
     },
     logout : async (context) => {
-      Vue.axios.post('/logout');
+      console.log('logout');
+      let res = await Vue.axios.post('/logout');
+      context.commit('set_username', '');
+      context.commit('set_uid', '');
+      context.commit('set_is_logged_in', false);
+      return res;
     },
     register : async (context, payload) => {
       const url = '/register';
@@ -53,6 +61,8 @@ export const store = new Vuex.Store({
       let { data } = await Vue.axios.post(url, body);
       context.commit('set_username', data.username);
       context.commit('set_uid', data.uid);
+      context.commit('set_is_logged_in', true);
+      return data;
     },
   }
 });

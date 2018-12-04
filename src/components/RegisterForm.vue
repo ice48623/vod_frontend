@@ -31,7 +31,7 @@
             ></v-text-field>
             <v-btn
                 class="primary"
-                @click.native="register"
+                @click.native="submit"
             >
               Register
             </v-btn>
@@ -84,7 +84,17 @@
     methods: {
       submit() {
         this.$v.$touch();
-        this.register();
+        this.register()
+          .then(res => {
+            if (!res.success) {
+              console.log(res.error);
+              return
+            }
+            this.$router.push('/home')
+          })
+          .catch(err => {
+            console.log(err);
+          });
         this.clear();
       },
       clear() {
@@ -94,7 +104,7 @@
         this.confirmPassword = '';
       },
       register() {
-        this.$store.dispatch('register', {username: this.username, password: this.password})
+        return this.$store.dispatch('register', {username: this.username, password: this.password})
       },
     }
   };

@@ -23,7 +23,7 @@
             ></v-text-field>
             <v-btn
                 class="primary"
-                @click.native="login"
+                @click.native="submit"
             >
               Login
             </v-btn>
@@ -67,7 +67,17 @@
     methods: {
       submit() {
         this.$v.$touch();
-        this.login();
+        this.login()
+          .then(res => {
+            if (!res.success) {
+              console.log(res.error);
+              return
+            }
+            this.$router.push('/home')
+          })
+          .catch(err => {
+            console.log(err);
+          });
         this.clear();
       },
       clear() {
@@ -76,7 +86,7 @@
         this.password = '';
       },
       login() {
-        this.$store.dispatch('login', {username: this.username, password: this.password})
+        return this.$store.dispatch('login', {username: this.username, password: this.password})
       },
     }
   };
