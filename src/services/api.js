@@ -50,5 +50,28 @@ export default {
       uid: uid,
     };
     return Vue.axios.post(url, body);
-  }
+  },
+
+  login(username, password) {
+    const url = '/login';
+    const body = {
+      username: username,
+      password: password,
+    };
+    return Vue.axios.post(url, body);
+  },
+
+  logout() {
+    const url = '/logout';
+    return Vue.axios.post(url);
+  },
+
+  register(username, password) {
+    const url = '/register';
+    const body = {
+      username: username,
+      password: password,
+    };
+    return Vue.axios.post(url, body);
+  },
 }

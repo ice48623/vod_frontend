@@ -45,6 +45,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength, sameAs } from 'vuelidate/lib/validators'
+  import api from '@/services/api';
 
   export default {
     mixins: [validationMixin],
@@ -84,16 +85,17 @@
     methods: {
       submit() {
         this.$v.$touch();
-        this.register()
-          .then(res => {
-            if (!res.success) {
-              console.log(res.error);
+        api.register(this.username, this.password)
+          .then(({data}) => {
+            if (!data.success) {
+              this.$store.dispatch('openPopup', {title: 'Register Failed', message: res.error});
               return
             }
+            this.$store.dispatch('register', data.data);
             this.$router.push('/home')
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
+            this.$store.dispatch('openPopup', {title: 'Register Failed', message: 'Please try again'});
           });
         this.clear();
       },
@@ -102,9 +104,6 @@
         this.username = '';
         this.password = '';
         this.confirmPassword = '';
-      },
-      register() {
-        return this.$store.dispatch('register', {username: this.username, password: this.password})
       },
     }
   };

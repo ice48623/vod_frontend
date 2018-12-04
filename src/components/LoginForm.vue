@@ -37,6 +37,7 @@
 <script>
   import { validationMixin } from 'vuelidate'
   import { required, minLength } from 'vuelidate/lib/validators'
+  import api from '@/services/api';
 
   export default {
     mixins: [validationMixin],
@@ -67,17 +68,17 @@
     methods: {
       submit() {
         this.$v.$touch();
-        this.login()
-          .then(res => {
-            if (!res.success) {
-              console.log(res.error);
-              this.$store.dispatch('openPopup', {title: 'Login Failed', message: res.error});
+        api.login(this.username, this.password)
+          .then(({ data }) => {
+            if (!data.success) {
+              this.$store.dispatch('openPopup', {title: 'Login Failed', message: data.error});
               return
             }
-            this.$router.push('/home')
+            this.$store.dispatch('login', data.data);
+            this.$router.push('/home');
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
+            this.$store.dispatch('openPopup', {title: 'Login Failed', message: 'Please try again'});
           });
         this.clear();
       },
@@ -85,9 +86,6 @@
         this.$v.$reset();
         this.username = '';
         this.password = '';
-      },
-      login() {
-        return this.$store.dispatch('login', {username: this.username, password: this.password})
       },
     }
   };

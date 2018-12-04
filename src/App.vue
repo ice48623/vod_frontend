@@ -2,7 +2,8 @@
   <v-app dark>
     <v-toolbar app v-if="is_logged_in">
       <v-toolbar-title class="headline text-uppercase">
-        <span>VOD Service</span>
+        <span>Hello : </span>
+        <span>{{ username }}</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn>
@@ -38,11 +39,13 @@
       },
       logout() {
         this.$store.dispatch('logout');
+        this.$router.push('/');
       },
     },
     computed: {
       ...mapGetters([
         'is_logged_in',
+        'username',
       ])
     }
   }

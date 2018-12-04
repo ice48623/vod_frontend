@@ -5,9 +5,9 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
   state: {
-    username: '',
-    uid: '',
-    is_logged_in: false,
+    username: localStorage.getItem('username'),
+    uid: localStorage.getItem('uid'),
+    is_logged_in: localStorage.getItem('is_logged_in'),
     popup: {
       title: '',
       message: '',
@@ -29,14 +29,19 @@ export const store = new Vuex.Store({
     },
   },
   mutations: {
-    set_username : (state, payload) => {
-      state.username = payload;
+    login : (state, {username, uid}) => {
+      state.is_logged_in = true;
+      state.username = username;
+      state.uid = uid;
+      localStorage.setItem('is_logged_in', true);
+      localStorage.setItem('username', username);
+      localStorage.setItem('userId', uid);
     },
-    set_uid : (state, payload) => {
-      state.uid = payload;
-    },
-    set_is_logged_in : (state, payload) => {
-      state.is_logged_in = payload;
+    logout : (state) => {
+      state.is_logged_in = false;
+      localStorage.removeItem('is_logged_in');
+      localStorage.removeItem('username');
+      localStorage.removeItem('uid');
     },
     open_popup : (state, payload) => {
       state.popup.title = payload.title;
@@ -52,35 +57,15 @@ export const store = new Vuex.Store({
   actions : {
     login : async (context, payload) => {
       console.log('login');
-      const body = {
-        username: payload.username,
-        password: payload.password,
-      };
-      let { data } = await Vue.axios.post('/login', body);
-      context.commit('set_username', data.username);
-      context.commit('set_uid', data.uid);
-      context.commit('set_is_logged_in', true);
-      return data;
+      console.log(payload);
+      context.commit('login', payload);
     },
     logout : async (context) => {
       console.log('logout');
-      let res = await Vue.axios.post('/logout');
-      context.commit('set_username', '');
-      context.commit('set_uid', '');
-      context.commit('set_is_logged_in', false);
-      return res;
+      context.commit('logout');
     },
     register : async (context, payload) => {
-      const url = '/register';
-      const body = {
-        username: payload.username,
-        password: payload.password,
-      };
-      let { data } = await Vue.axios.post(url, body);
-      context.commit('set_username', data.username);
-      context.commit('set_uid', data.uid);
-      context.commit('set_is_logged_in', true);
-      return data;
+      context.commit('login', payload);
     },
     openPopup : (context, payload) => {
       context.commit('open_popup', payload);
