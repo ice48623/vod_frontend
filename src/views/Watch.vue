@@ -25,6 +25,7 @@
         </span>
       </div>
       <add-comment-card
+        v-if="is_logged_in"
         :callback="handleAddComment"
         ref="addComment"
       ></add-comment-card>
@@ -137,6 +138,7 @@
       },
       ...mapGetters([
         'uid',
+        'is_logged_in',
       ])
     },
     mounted() {

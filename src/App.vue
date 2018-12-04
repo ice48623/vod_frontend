@@ -18,6 +18,12 @@
       >
         Logout
       </v-btn>
+      <v-btn
+          @click.native="login"
+          v-if="!is_logged_in"
+      >
+        Login
+      </v-btn>
     </v-toolbar>
     <v-content>
       <router-view></router-view>
@@ -42,6 +48,9 @@
       logout() {
         this.$store.dispatch('logout');
         this.$router.push('/');
+      },
+      login() {
+        this.$router.push('/login');
       },
     },
     computed: {
