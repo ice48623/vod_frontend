@@ -74,4 +74,22 @@ export default {
     };
     return Vue.axios.post(url, body);
   },
+
+  addComment(video_id, uid, comment) {
+    console.log('uid: ' + uid);
+    console.log('video_id: ' + video_id);
+    console.log('comment: ' + comment);
+    const url = '/comment';
+    const body = {
+      video_id: video_id,
+      uid: uid,
+      comment: comment,
+    };
+    return Vue.axios.put(url, body);
+  },
+
+  getComment(video_id) {
+    const url = '/comment/' + video_id;
+    return Vue.axios.get(url);
+  }
 }

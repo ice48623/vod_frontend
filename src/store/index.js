@@ -35,7 +35,7 @@ export const store = new Vuex.Store({
       state.uid = uid;
       localStorage.setItem('is_logged_in', true);
       localStorage.setItem('username', username);
-      localStorage.setItem('userId', uid);
+      localStorage.setItem('uid', uid);
     },
     logout : (state) => {
       state.is_logged_in = false;

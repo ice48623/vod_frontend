@@ -24,11 +24,15 @@
           {{ likes.amount }}
         </span>
       </div>
+      <add-comment-card
+        :callback="handleAddComment"
+        ref="addComment"
+      ></add-comment-card>
       <comment-card
-          v-for="c in comments"
+          v-for="(c, index) in comments"
           :username="c.uid"
           :comment="c.comment"
-          :key="c.uid"
+          :key="index"
       ></comment-card>
     </div>
   </v-container>
@@ -36,6 +40,7 @@
 
 <script>
   import CommentCard from '@/components/CommentCard';
+  import AddCommentCard from '@/components/AddCommentCard';
   import api from '@/services/api';
   import { mapGetters } from 'vuex';
 
@@ -43,6 +48,7 @@
     name: 'Watch',
     components: {
       CommentCard,
+      AddCommentCard,
     },
     data() {
       return {
@@ -81,11 +87,10 @@
             this.videoOptions.poster = resData.img;
             this.likes = resData.likes;
             this.videoOptions.source = resData.source;
-            console.log(this.videoOptions.source);
             this.player.updateSrc(resData.source);
           })
-          .catch(err => {
-            console.log(err);
+          .catch(() => {
+            this.$store.dispatch('openPopup', {title: 'Unable to fetch video', message: 'Please try again later'});
           });
       },
       handleLike() {
@@ -99,6 +104,33 @@
           this.likes.is_like = false;
         }
       },
+      handleAddComment(comment) {
+        api.addComment(this.video_id, this.uid, comment)
+          .then(({data}) => {
+            if (!data.success) {
+              this.$store.dispatch('openPopup', {title: 'Add Comment Failed', message: data.error});
+              return
+            }
+            this.getComment();
+          })
+          .catch(() => {
+            this.$refs.addComment.clear();
+            this.$store.dispatch('openPopup', {title: 'Add Comment Failed', message: 'Please try again'});
+          });
+      },
+      getComment() {
+        api.getComment(this.video_id)
+          .then(({data}) => {
+            if (!data.success) {
+              this.$store.dispatch('openPopup', {title: 'Add Comment Failed', message: data.error});
+              return
+            }
+            this.comments = data.data.comments;
+          })
+          .catch(() => {
+            this.$store.dispatch('openPopup', {title: 'Unable to fetch comment', message: 'Please try again later'});
+          })
+      }
     },
     computed: {
       player() {
@@ -110,6 +142,7 @@
     },
     mounted() {
       this.initialize();
+      console.log(this.uid)
     },
   }
 </script>
