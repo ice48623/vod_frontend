@@ -7,9 +7,8 @@ import axios from "axios";
 // axios.defaults.baseURL = process.env.baseURL || process.env.apiUrl || '';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-
 let config = {
-  baseURL: 'http://localhost:5000',
+  baseURL: process.env.VUE_APP_API_ENDPOINT,
   withCredentials: false,
   headers: {
     Accept: 'application/json',
