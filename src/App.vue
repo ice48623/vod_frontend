@@ -4,7 +4,7 @@
       <v-toolbar-title class="headline text-uppercase">
         <span>Hello : </span>
         <span v-if="is_logged_in">{{ username }}</span>
-        <span v-if="!is_logged_in">guess</span>
+        <span v-if="!is_logged_in">guest</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn>

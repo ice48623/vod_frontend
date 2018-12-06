@@ -53,7 +53,7 @@
     },
     data() {
       return {
-        name: 'Demo Video',
+        name: '',
         liked: false,
         video_id: '',
         filename: '',
@@ -82,6 +82,7 @@
               return
             }
             const resData = data.data;
+            this.name = resData.name;
             this.comments = resData.comments;
             this.filename = resData.filename;
             this.videoOptions.poster = resData.img;
