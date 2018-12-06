@@ -31,7 +31,7 @@
       ></add-comment-card>
       <comment-card
           v-for="(c, index) in comments"
-          :username="c.uid"
+          :username="c.username"
           :comment="c.comment"
           :key="index"
       ></comment-card>

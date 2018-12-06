@@ -17,6 +17,7 @@
                 v-model="password"
                 :error-messages="passwordErrors"
                 label="Password"
+                type="password"
                 required
                 @input="$v.password.$touch()"
                 @blur="$v.password.$touch()"
@@ -25,6 +26,7 @@
                 v-model="confirmPassword"
                 :error-messages="confirmPasswordErrors"
                 label="Confirm Password"
+                type="password"
                 required
                 @input="$v.confirmPassword.$touch()"
                 @blur="$v.confirmPassword.$touch()"
